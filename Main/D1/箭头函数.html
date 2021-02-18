@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		let PageHandler = {
+  		id: 123,
+		  init: function () {
+		    console.log(this); // 此时this指向PageHandler对象
+
+		    // 给文档添加点击事件
+		    document.addEventListener('click', event => {
+		      console.log(this); // 谁调用这个方法就指向谁 这里点击指向PageHandler
+		      this.dosomeThings(event.type);
+		    }, false);
+		  },
+		  dosomeThings: function (type){
+		    console.log(`事件类型：${type}, 当前id：${this.id}`);
+		  }
+		}
+
+		PageHandler.init();
+
+	</script>
+</body>
+</html>

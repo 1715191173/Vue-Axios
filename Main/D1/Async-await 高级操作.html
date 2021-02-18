@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Async-await 高级操作</title>
+</head>
+<body>
+  <script>
+    const setDelay = (millisecond) => {
+      return new Promise((resolve, reject)=>{
+        if (typeof millisecond != 'number') reject(new Error('参数必须是number类型'));
+        setTimeout(()=> {
+          resolve(`我延迟了${millisecond}毫秒后输出的`)
+        }, millisecond)
+      })
+    }
+
+    const setDelaySecond = (seconds) => {
+      return new Promise((resolve, reject)=>{
+        if (typeof seconds != 'number' || seconds > 10) reject(new Error('参数必须是number类型，并且小于等于10'));
+        setTimeout(()=> {
+          resolve(`我延迟了${seconds}秒后输出的，是第二个函数`)
+        }, seconds * 1000)
+      })
+    }
+
+    // 多个异步请求
+    console.log('====== 多个异步请求 ======');
+    const demo = async () => {
+      const result = await setDelay(1000);
+      console.log(result);
+      console.log(await setDelaySecond(2));
+      console.log(await setDelay(1000));
+      console.log('完成了');
+    }
+    demo().catch(err => {
+      console.log(err);
+    })
+
+
+
+    // 多个异步请求且分别处理异常
+    console.log('====== 多个异步请求且分别处理异常 ======');
+    (async ()=>{
+      const result = await setDelay(1000).catch(err=>{
+        console.log(err)
+      });
+      console.log(result);
+      const result1 = await setDelaySecond(12).catch(err=>{
+        console.log(err)
+      })
+      console.log(result1);
+      console.log(await setDelay(1000));
+      console.log('完成了');
+    })()
+
+
+    // 多个异步请求 且 封装处理异常
+    console.log('====== 多个异步请求 且 封装处理异常 ======');
+    function to(promise) {
+      return promise.then(data => {
+        return [null, data];
+      })
+        .catch(err => [err]); // es6的返回写法
+    }
+
+    (async ()=>{
+
+      // 第一个是错误信息，第二个是then的异步返回数据，这里要注意一下重复变量声明可能导致问题（这里举例是全局，如果用let，const，请换变量名）。
+
+      [err, result] = await to(setDelay(1000))
+      // 如果err存在就是有错，不想继续执行就抛出错误
+      if (err) throw new Error('出现错误，同时我不想执行了');
+      console.log(result);
+
+      [err, result1] = await to(setDelaySecond(12))
+      // 还想执行就不要抛出错误
+      if (err) console.log('出现错误，同时我想继续执行', err);
+      console.log(result1);
+
+      console.log(await setDelay(1000));
+      console.log('完成了');
+    })()
+
+
+    // 中断Promise
+    let count = 6;
+    const demo = async ()=>{
+      const result = await setDelay(1000);
+      console.log(result);
+      const result1 = await setDelaySecond(count);
+      console.log(result1);
+      if (count > 5) {
+        return '我退出了，下面的不进行了';
+        // return;
+        // return false; // 这些写法都可以
+        // return null;
+      }
+      console.log(await setDelay(1000));
+      console.log('完成了');
+    };
+    demo().then(result=>{
+      console.log(result);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+
+
+    // async/await循环获取数据(串行)之for循环
+    (async ()=>{
+      arr = [timeout(2000), timeout(1000), timeout(2000)]
+      for (var i=0; i < arr.length; i++) {
+        result = await arr[i]();
+        console.log(result);
+      }
+    })()
+
+    // 闭包, 保证Promise会一直保存着, 等到需要调用的时候再使用. 而且最大的优点是可以预先传入你需要的参数
+    function timeout(millisecond) {
+      return ()=> {
+        return setDelay(millisecond);
+      }
+    }
+  </script>
+</body>
+</html>

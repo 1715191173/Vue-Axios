@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Classs</title>
+</head>
+<body>
+  <script>
+    // ES5
+    /*
+    function Person(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    Person.prototype.fav = function () {
+      console.log('ES5语法：' + this.age);
+    }
+    const p1 = new Person("Alan Lee", 18);
+    p1.fav()
+    */
+
+    // ES6
+    class Person{
+      static a = 10;
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      fav() {
+        console.log(this.name);
+      }
+      static fn() {
+        console.log("fn");
+      }
+    }
+    const p2 = new Person("Alan Lee", 18);
+    p2.fav()
+    Person.fn()
+    console.log(Person.a);
+  </script>
+</body>
+</html>

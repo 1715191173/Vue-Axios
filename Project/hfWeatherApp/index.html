@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>和风天气App</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_681041_b16k75oo82a.css">
+</head>
+
+<body>
+  <!--  搜索-->
+  <div class="search">
+    <div class="logo">
+      <a href="/">
+        <img src="./images/logo-dark.png" alt="">
+      </a>
+    </div>
+    <form id='search_form' action="javascript:;">
+      <input class="search_form" type="search" placeholder="搜索的城市">
+    </form>
+    <div class="search-btn" >
+      <img src="./images/search.png" alt="">
+    </div>
+  </div>
+  <!-- 历史查询 -->
+  <div class="history" style='height:0.5rem'>
+    <div class="la">
+      <span>历史查询</span>
+      <img class="la-img" src="./images/more.png" alt="">
+    </div>
+    <div class="historied">
+       历史记录
+<!--       <div class="history-item" data-indexs="index">
+        <span class="history-time">2020-08-20 17:34:00</span>
+        <span class="history-city">北京</span>
+      </div>
+      <div class="history-item" data-indexs="index">
+        <span class="history-time">2020-08-20 17:34:00</span>
+        <span class="history-city">北京</span>
+      </div>
+      <div class="history-item" data-indexs="index">
+        <span class="history-time">2020-08-20 17:34:00</span>
+        <span class="history-city">北京</span>
+      </div>-->
+
+    </div>
+    <div class="clearBtn">
+      <!-- 清除历史记录 -->
+      清除历史记录
+    </div>
+  </div>
+
+  <!-- 今日天气 -->
+  <div class="infomation">
+    <div class="now">
+      <div class="now-city-time">
+        <span class="city">北京</span>
+        <span class="time"></span>
+      </div>
+      <div class="situation">
+        <img class="p1_icon" src="https://cdn.heweather.com/cond_icon/100.png" alt="">
+        <h1 class="text"></h1>
+        <div class="temp">
+          <h3 class="tmp"></h3>
+          <h3 class="fl"></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 未来三天天气预报 -->
+  <div class="forecast">
+    <!-- 未来的天气状况 动态获取 -->
+    <div class="nowday forecast-item">
+      <div class="forecast-situation">
+        <img src="https://cdn.heweather.com/cond_icon/104.png" alt="">
+        <img src="https://cdn.heweather.com/cond_icon/101.png" alt="">
+        今天 * <span class="txt">小雨转阵雨</span>
+      </div>
+      <div class="forecast-temp">
+        <span class="max">30°/</span>
+        <span class="min">27°</span>
+      </div>
+    </div>
+    <div class="nowday forecast-item">
+      <div class="forecast-situation">
+        <img src="https://cdn.heweather.com/cond_icon/104.png" alt="">
+        <img src="https://cdn.heweather.com/cond_icon/104.png" alt="">
+        明天 * <span class="txt">阴雨转云</span>
+      </div>
+      <div class="forecast-temp">
+        <span class="max">27°/</span>
+        <span class="min">20°</span>
+      </div>
+    </div>
+    <div class="nowday forecast-item">
+      <div class="forecast-situation">
+        <img src="https://cdn.heweather.com/cond_icon/104.png" alt="">
+        <img src="https://cdn.heweather.com/cond_icon/104.png" alt="">
+        后天 * <span class="txt">大雨</span>
+      </div>
+      <div class="forecast-temp">
+        <span class="max">27°/</span>
+        <span class="min">20°</span>
+      </div>
+    </div>
+  </div>
+  <!-- 生活指数 -->
+  <div class="lifestyle">
+    <h2>生活指数</h2>
+    <div class="lifestyle-box">
+      <div class="lifestyle-item" data-indexs="0">
+        <i class="iconfont icon-shushidu"></i>
+        <span>舒适度指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="1">
+        <i class="iconfont icon-3chuanyixiguan"></i>
+        <span>穿衣指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="2">
+        <i class="iconfont icon-ganmaoyaowu-copy"></i>
+        <span>感冒指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="3">
+        <i class="iconfont icon-yundong"></i>
+        <span>运动指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="4">
+        <i class="iconfont icon-lvyou"></i>
+        <span>旅游指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="5">
+        <i class="iconfont icon-iconset0451"></i>
+        <span>紫外线指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="6">
+        <i class="iconfont icon-xiche"></i>
+        <span>洗车指数</span>
+      </div>
+      <div class="lifestyle-item" data-indexs="7">
+        <i class="iconfont icon-kongqizhiliangjiance"></i>
+        <span>空气污染扩散条件指数</span>
+      </div>
+    </div>
+  </div>
+  <!-- 生活指数弹窗 -->
+  <div class="lifestyle-tc">
+
+
+  </div>
+  <script src="./js/rem.js"></script>
+  <script src="./js/axios.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
+</html>

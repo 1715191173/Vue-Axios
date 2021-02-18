@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function requestImg(imgSrc) {
+    return new Promise((resolve, reject) => {
+      let img = new Image();
+      img.onload = function () {
+        resolve(img);
+      }
+      img.src = imgSrc;
+    });
+  }
+
+  // 设置延时函数
+  function timeout() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('图片请求超时');
+      }, 3000);
+    });
+  }
+
+  Promise.race([requestImg('img/2.png'), timeout()])
+    .then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+</script>
+</body>
+</html>

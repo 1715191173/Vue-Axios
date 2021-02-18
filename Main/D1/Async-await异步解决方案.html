@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Async-await异步解决方案</title>
+</head>
+<body>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.js"></script>
+<script>
+  // 1. 凡是在前面添加了async的函数在执行完之后都会自动返回一个Promise对象
+  // 2. awiat必须在async函数里使用，不能单独使用
+  // 3. await需要后面跟Promise对象，且不必写then（原因是获取Promise对象成功状态传递出来的参数）
+  async function fn() {
+    let getUrl = 'https://devapi.qweather.com/v7/weather/now?key=ab2a12e9d33e4fb7a16304836e78a72e&location=113.122717,23.028762'
+    const res = await axios.get(getUrl);
+    console.log(res.data);
+  }
+  const f = fn();
+  console.log(f);
+
+  function getWeather(url) {
+    // 异步操作 把请求的结果 返回出去
+    // 返回一个promise对象
+    return new Promise((resolve, reject) => {
+      // 创建XHR对象
+      // https://free-api.heweather.net/s6/weather/now?location=beijing&key=b1eac8ade8b749bfb154b194a06964a4
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = handler
+      xhr.open('GET', url);
+      xhr.responseType = 'json';
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.send();
+
+      function handler() {
+        if (this.readyState !== 4) {
+          return;
+        }
+
+        if (this.status === 200) {
+          resolve(this.response);
+        } else {
+          reject(new Error(this.statusText));
+        }
+
+      }
+    })
+  }
+  const nowUrl =
+    'https://devapi.qweather.com/v7/weather/3d?key=ab2a12e9d33e4fb7a16304836e78a72e&location=113.122717,23.028762';
+
+  (async function(){
+    try {
+      const res = await getWeather(nowUrl);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  })()
+
+  
+  
+</script>
+</body>
+</html>
