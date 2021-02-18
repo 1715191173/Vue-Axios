@@ -8,20 +8,24 @@
       margin: 0 auto;
       padding: 0;
     }
+    #app{
+      width: 500px;
+      height: 250px;
+    }
+    #app img{
+      background-size: 10% 10%;
+    }
   </style>
 </head>
-<style type="text/css">
-  #app input{
-    text-align: right;
-  }
-</style>
 <body>
   <div id="app">
     <ul>
       <li>
-        <img src="" alt="">
+        <img :src="currentSrc" :alt="currentIndex">
       </li>
     </ul>
+    <button @click="prev">上一张</button>
+    <button @click="next">下一张</button>
   </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -29,9 +33,30 @@
     el: '#app',
     data() {
       return {
+        currentSrc: './img/1.jpg',
+        currentIndex: 1
       }
     },
+    created() {
+      setInterval(() => {
+        this.next();
+      }, 2000)
+    },
     methods: {
+      prev() {
+        this.currentIndex--;
+        if (this.currentIndex < 1) {
+          this.currentIndex = 3;
+        }
+        this.currentSrc = `./img/${this.currentIndex}.jpg`;
+      },
+      next() {
+        this.currentIndex++;
+        if (this.currentIndex > 3) {
+          this.currentIndex = 1;
+        }
+        this.currentSrc = `./img/${this.currentIndex}.jpg`;
+      }
     }
   })
 </script>
