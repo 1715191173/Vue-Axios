@@ -40,6 +40,9 @@
 
    当有v-for时候，最好再绑定**key**属性 **:key='item.id'**，如果没有数据没有id属性那就不需要绑定，在有id属性情况下，可以虚拟DOM渲染效率。
 
+6. 表单输入绑定 => 双向数据绑定 **v-model=' '** 或 **v-model.lazy=' '** 
+   实质上是v-bind: 和 @input的一个语法糖(组合) 
+
 #### 数组和对象的更新检测方式
 
 当发现更新数组时发现Vue没有实时渲染则可以使用以下方法解决
@@ -55,3 +58,4 @@ this.obj = Object.assign({}, this.obj, {age: 18, fav: "Game"})
 Object.splice(.)
 ```
 
+#### 生命周期函数

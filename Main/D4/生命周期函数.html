@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h3>{{num}}</h3>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      num: 10,
+      timer: null,
+    },
+
+
+    // 生命周期函数
+    created() {
+      console.log('已加载');
+      this.timer = setInterval(()=> {
+        this.num--;
+      }, 1000);
+    },
+    watch: {
+      'num':function(newV, oldV){
+        console.log(newV);
+        if(newV == 0){
+          alert('时间到');
+          clearInterval(this.timer);
+          this.num = 10;
+        }
+      }
+    }
+  })
+
+</script>
+</body>
+</html>
