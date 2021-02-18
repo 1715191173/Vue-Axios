@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>汇率转换</title>
+</head>
+<style type="text/css">
+  #app input{
+      text-align: right;
+  }
+</style>
+<body>
+<div id="app">
+  <h1>汇率转换</h1>
+  <div>
+    <span>cny</span>
+    <input type="text" v-model="cny"  :value="cny">
+    <span>人民币￥</span>
+  </div>
+
+  <div>
+    <span>usd</span>
+    <input type="text" v-model="usd">
+    <span>美元$</span>
+  </div>
+
+  <div>
+    <span>hkd</span>
+    <input type="text" v-model="hkd">
+    <span>港币HK$</span>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  const CNY_USD = 7.02;
+  const CNY_HKD = 0.82;
+  const app = new Vue({
+    el: '#app',
+    data: {
+      cny: '100',
+    },
+    computed: {
+      usd() {
+        return (this.cny / CNY_USD).toFixed(2);
+      },
+      hkd() {
+        return (this.cny / CNY_HKD).toFixed(2);
+      }
+    }
+  })
+</script>
+</body>
+</html>

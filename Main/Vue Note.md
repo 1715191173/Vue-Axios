@@ -59,3 +59,7 @@ Object.splice(.)
 ```
 
 #### 生命周期函数
+
+created 
+
+watch
