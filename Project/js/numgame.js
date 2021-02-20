@@ -1,8 +1,8 @@
 /*
 * 制作思路:
-* 1. 在页面创建时候搭建游戏界面，即创建5*5的li并且不重复赋值
-* 2. 点击开始游戏后，刷新游戏界面，time开始计时
-* 3. 游戏完成弹出弹窗
+* 1. 在页面创建时候搭建游戏界面，即创建5*5的li并且不重复赋值 > buildBox(利用isRepeated判断是否重复)
+* 2. 点击开始游戏后，刷新游戏界面，time开始计时 > buildBox totalTime计时
+* 3. 游戏完成弹出弹窗，重置游戏 > reset 和 gameEnd 状态改变引发操作
 * */
 
 new Vue({
@@ -15,6 +15,7 @@ new Vue({
       reset: false, // 游戏运行控制
       times: 1, // 正确的点击次数
       gameEnd: false,
+      temp_time: 0
     }
   },
   created() {
@@ -29,23 +30,24 @@ new Vue({
       this.runTime = 0;
     },
     gameEnd(newV, oldV) {
+
       if(newV) {
         clearInterval(this.timer);
-        if(this.runTime > 20) {
-          alert(`一共花费${this.runTime}秒！你的记忆力相当于一头猪`)
-        } else if(this.runTime > 15 && this.runTime <= 20) {
-          alert(`一共花费${this.runTime}秒！你的记忆力比一头猪好一点`)
-        } else if(this.runTime > 13 && this.runTime <= 15) {
-          alert(`一共花费${this.runTime}秒！你的记忆力处于普通人水平`)
-        } else if(this.runTime > 10 && this.runTime <= 13) {
-          alert(`一共花费${this.runTime}秒！你的记忆力比普通人好一点`)
-        } else if(this.runTime < 10) {
-          alert(`一共花费${this.runTime}秒！卧槽你是人么`)
+        if(this.temp_time > 20) {
+          alert(`一共花费${this.temp_time}秒！你的记忆力相当于一头猪`)
+        } else if(this.temp_time > 15 && this.temp_time <= 20) {
+          alert(`一共花费${this.temp_time}秒！你的记忆力比一头猪好一点`)
+        } else if(this.temp_time > 13 && this.temp_time <= 15) {
+          alert(`一共花费${this.temp_time}秒！你的记忆力处于普通人水平`)
+        } else if(this.temp_time > 10 && this.temp_time <= 13) {
+          alert(`一共花费${this.temp_time}秒！你的记忆力比普通人好一点`)
+        } else if(this.temp_time < 10) {
+          alert(`一共花费${this.temp_time}秒！卧槽你是人么`)
         }
       }
       this.gameEnd = false;
-      this.runTime = 0;
     }
+
   },
   methods: {
     // 开始游戏
@@ -92,6 +94,8 @@ new Vue({
     totalTime() {
       this.timer = setInterval(() => {
         this.runTime++;
+        console.log(this.runTime);
+        this.temp_time = this.runTime;
       }, 1000)
     },
 
