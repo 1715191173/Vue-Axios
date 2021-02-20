@@ -1,13 +1,20 @@
+/*
+* 制作思路:
+* 1. 在页面创建时候搭建游戏界面，即创建5*5的li并且不重复赋值
+* 2. 点击开始游戏后，刷新游戏界面，time开始计时
+* 3. 游戏完成弹出弹窗
+* */
+
 new Vue({
   el: '#app',
   data() {
     return{
       items: [],
-      time: 0,
+      runTime: 0,
       timer: null,
       reset: false, // 游戏运行控制
       times: 1, // 正确的点击次数
-      timeCount: false,
+      gameEnd: false,
     }
   },
   created() {
@@ -15,27 +22,29 @@ new Vue({
     this.buildBox()
   },
   watch: {
-    reset(newV) {
+    reset() {
       [...this.$refs.li].map(item =>{
         item.style = '';
       })
+      this.runTime = 0;
     },
-    timeCount(newV, oldV) {
+    gameEnd(newV, oldV) {
       if(newV) {
         clearInterval(this.timer);
-        if(this.time > 20) {
-          alert(`一共花费${this.time}秒！你的记忆力相当于一头猪`)
-        } else if(this.time > 15 && this.time <= 20) {
-          alert(`一共花费${this.time}秒！你的记忆力比一头猪好一点`)
-        } else if(this.time > 13 && this.time <= 15) {
-          alert(`一共花费${this.time}秒！你的记忆力处于普通人水平`)
-        } else if(this.time > 10 && this.time <= 13) {
-          alert(`一共花费${this.time}秒！你的记忆力比普通人好一点`)
-        } else if(this.time > 13 && this.time <= 15) {
-          alert(`一共花费${this.time}秒！卧槽你是人么`)
+        if(this.runTime > 20) {
+          alert(`一共花费${this.runTime}秒！你的记忆力相当于一头猪`)
+        } else if(this.runTime > 15 && this.runTime <= 20) {
+          alert(`一共花费${this.runTime}秒！你的记忆力比一头猪好一点`)
+        } else if(this.runTime > 13 && this.runTime <= 15) {
+          alert(`一共花费${this.runTime}秒！你的记忆力处于普通人水平`)
+        } else if(this.runTime > 10 && this.runTime <= 13) {
+          alert(`一共花费${this.runTime}秒！你的记忆力比普通人好一点`)
+        } else if(this.runTime < 10) {
+          alert(`一共花费${this.runTime}秒！卧槽你是人么`)
         }
       }
-      this.timeCountFlag = false;
+      this.gameEnd = false;
+      this.runTime = 0;
     }
   },
   methods: {
@@ -43,12 +52,15 @@ new Vue({
     startGame() {
       // 重置定时器
       clearInterval(this.timer);
+      this.times = 1;
       // 刷新游戏结构
       this.buildBox();
       // 开始游戏
       this.reset = !this.reset;
       // 开始计时
-      this.totalTime();
+      if (this.reset){
+        this.totalTime();
+      }
     },
 
     buildBox() {
@@ -79,7 +91,7 @@ new Vue({
 
     totalTime() {
       this.timer = setInterval(() => {
-        this.time++;
+        this.runTime++;
       }, 1000)
     },
 
@@ -87,10 +99,11 @@ new Vue({
       if(this.reset === false){
         alert("请先点击开始游戏");
       } else if(item.val == this.times && this.reset == true) {
-        this.$refs.li[i].style = 'background-color: #666; color:#fff'
+        this.$refs.li[i].style = 'background-color: #293F6D; color:#fff'
         this.times++;
         if (this.times == 26){
-          this.timeCount = true;
+          this.gameEnd = true;
+          this.reset = false;
         }
       }
     },

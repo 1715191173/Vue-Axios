@@ -85,6 +85,7 @@
       flex: 1;
       text-align: center;
     }
+
   </style>
 </head>
 
@@ -94,12 +95,12 @@
     <h3>15秒注意力大考验</h3>
     <div id="main">
       <ul class="main">
-        <li class="box" v-for='(item,i) in items' :key='i' @click='clickBox(item,i)' ref='li' :add-times="times" :time-ount="timeCount">
+        <li class="box" v-for='(item,i) in items' :key='i' @click='clickBox(item,i)' ref='li'>
           <p>{{item.val}}</p>
         </li>
         <div class="control">
-          <button @click="startGame">开始游戏</button>
-          <p>用时：{{time}} 秒</p>
+          <button @click="startGame">开始/重置游戏</button>
+          <p>用时：{{runTime}} 秒</p>
         </div>
       </ul>
 
