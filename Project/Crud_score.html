@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>vue成绩单</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .report_card {
+      width: 800px;
+      margin: 0 auto;
+      font-size: 12px;
+    }
+
+    .report_card table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    .report_card caption {
+      font-size: 14px;
+      text-align: left;
+      line-height: 30px;
+      font-weight: bold;
+    }
+
+    .report_card table th,
+    .report_card table td {
+      border: 1px solid #ccc;
+    }
+
+    .report_card table th {
+      height: 36px;
+      background: #f8f8f8;
+    }
+
+    .report_card table td {
+      height: 32px;
+      background: #f8f8f8;
+    }
+
+    .content {
+      width: 100%;
+      height: 32px;
+      line-height: 32px;
+      position: relative;
+    }
+
+    .content input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      color: #999;
+      padding-left: 10px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      height: 30px;
+      border: 1px solid blue;
+      -webkit-animation: borderAn 2s infinite;
+      animation: borderAn 2s infinite;
+    }
+
+    .studyForm select {
+      width: 100px;
+      height: 28px;
+    }
+
+    .searchInput {
+      width: 200px;
+      height: 28px;
+    }
+
+    .searchButton {
+      width: 100px;
+      height: 32px;
+    }
+
+    @-webkit-keyframes borderAn {
+      0% {
+        border-color: transparent;
+      }
+
+      100% {
+        border-color: blue;
+      }
+    }
+
+    @keyframes borderAn {
+      0% {
+        border-color: transparent;
+      }
+
+      100% {
+        border-color: blue;
+      }
+    }
+
+    .studyForm {
+      margin: 10px 0;
+    }
+
+    .studyForm input {
+      width: 120px;
+      height: 30px;
+
+    }
+
+  </style>
+  <link rel="stylesheet" href="css/public.css">
+</head>
+
+<body>
+  <div class="report_card" id="reportCard">
+    <table class="studyForm">
+      <caption>成绩录入/处理</caption>
+      <tbody>
+        <tr>
+          <td width="170">学号:<input type="text" v-model="addArr.stuId"></td>
+          <td width="170">姓名:<input type="text" v-model="addArr.name"></td>
+          <td width="170">语文:<input type="text" v-model="addArr.ywScores"></td>
+          <td width="170">数学:<input type="text" v-model="addArr.sxScores"></td>
+          <td colspan="2" width="120" class="un-selected">
+            <a href="javascript:void(0);" v-on:click="submitStu">录入</a>
+            <a href="javascript:void(0);" v-on:click="resetForm">重置</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            排序字段:
+            <select v-model='sortKey'>
+              <option value="ywScores">语文</option>
+              <option value="sxScores">数学</option>
+            </select>
+          </td>
+          <td>
+            排序类型：
+            <select v-model="sortClass">
+              <option value="1">升序</option>
+              <option value="-1">降序</option>
+            </select>
+          </td>
+          <td colspan="3"></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="scoreList">
+      <caption>成绩列表</caption>
+      <thead class="un-selected">
+        <th width="170">学号</th>
+        <th width="170">姓名</th>
+        <th width="170">语文</th>
+        <th width="170">数学</th>
+        <th colspan="2" width="120">操作</th>
+      </thead>
+      <tbody>
+        <!-- 学生成绩列表显示 -->
+        <tr v-for="(item,index) in studyArr" :key='item.stuId'>
+          <td>
+            <div class="content">{{item.stuId}}
+              <input v-model="item.stuId" type="text" v-if="index==nowEditCol">
+            </div>
+          </td>
+          <td>
+            <div class="content">{{item.name}}
+              <input v-model="item.name" type="text" v-if="index==nowEditCol">
+            </div>
+          </td>
+          <td>
+            <div class="content">{{item.ywScores}}
+              <input v-model="item.ywScores" type="text" v-if="index==nowEditCol">
+            </div>
+          </td>
+          <td>
+            <div class="content">{{item.sxScores}}
+              <input v-model="item.sxScores" type="text" v-if="index==nowEditCol">
+            </div>
+          </td>
+          <td class="un-selected">
+            <a href="javascript:void(0);" v-on:click="startEdit(index)" v-if="index!=nowEditCol">编辑</a>
+            <a href="javascript:void(0);" v-on:click="cancelEdit" v-if="index==nowEditCol">取消</a>
+            <a href="javascript:void(0);" v-on:click="sureEdit(index)" v-if="index==nowEditCol">确认</a>
+          </td>
+          <td class="un-selected"><a href="javascript:void(0);" v-on:click="deleteStu(index)">删除</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="./js/crud_score.js"></script>
+</body>
+
+</html>
