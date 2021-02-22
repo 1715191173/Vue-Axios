@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>日历</title>
+  <link rel="stylesheet" href="./css/calendar.css">
+  <link rel="stylesheet" href="./css/public.css">
+</head>
+
+<body>
+<h1>CSS 日历</h1>
+<div id="calendar" class="un-selected">
+  <!-- 月份 -->
+  <div class="month">
+    <ul>
+      <li class="arrow" @click='changeMonth("prev")'>❮</li>
+      <li class="year-month">
+        <span class="choose-year">{{currentYear}}</span>
+        <span class="choose-month">{{currentMonth}}</span>
+      </li>
+      <li class="arrow" @click='changeMonth("next")'>❯</li>
+    </ul>
+  </div>
+  <!-- 星期 -->
+  <ul class="weekdays">
+    <li v-for='(item,i) in weeks'>
+      <span :style='isRed(i)'>{{item}}</span>
+    </li>
+  </ul>
+  <!-- 天 -->
+  <ul class="days">
+    <li v-for="day in days">
+      <!--今天-->
+      <span v-if="day.getMonth()+1 != currentMonth" class="other-month">{{ day.getDate() }}</span>
+      <span v-else>
+          <!--今天-->
+          <span
+              v-if="day.getFullYear() == new Date().getFullYear() && day.getMonth() == new Date().getMonth() && day.getDate() == new Date().getDate()"
+              class="active">{{ day.getDate() }}</span>
+
+          <span v-else>{{ day.getDate() }}</span>
+        </span>
+    </li>
+  </ul>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./js/calendar.js"></script>
+
+</body>
+
+</html>
