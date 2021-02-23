@@ -67,3 +67,14 @@ Object.splice(.)
 created 
 
 watch
+
+#### 脚手架vue-cli
+
+1. 安装node
+2. cnpm i -g @vue/cli
+
+3. 创建3.0版本项目 vue create <项目名>
+
+4. 运行 vue npm run serve
+
+​	

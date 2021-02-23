@@ -2,7 +2,6 @@ new Vue({
   el: '#app',
   data() {
     return {
-      // puzzles: [1,2,10,3,5,8,9,11,13,14,4,7,6,15,12]
       puzzles: [], // 存放数据
     }
   },
@@ -15,20 +14,19 @@ new Vue({
         let num = Math.floor((Math.random() * 15 + 1));
         // 过滤重复的值
         if (this.isRepeat(num, arr)){
-          arr[i] = {
-            val: num,
-            id : i
-          }
+          arr[i] = num;
           i++;
         }
-
       }
+
+      // 插入空元素
+      arr.splice(Math.floor((Math.random() * 15 + 1)), 0, '')
       this.puzzles = arr;
     },
 
     isRepeat(num, arr) {
       for (let j = 0; j < arr.length; j++){
-        if(arr[j]['val'] === num) {
+        if(arr[j] === num) {
           return false;
         }
       }
@@ -40,11 +38,43 @@ new Vue({
     },
 
     moveFn(index) {
-      console.log(index);
+      let temp = this.puzzles[index];
+      // 点击元素的四个方向进行检测
+      if (this.puzzles[index - 4] === ''){
+        this.$set(this.puzzles, index, '');
+        this.$set(this.puzzles, index - 4, temp);
+      }
+      if (this.puzzles[index + 4] === ''){
+        this.$set(this.puzzles, index, '');
+        this.$set(this.puzzles, index + 4, temp);
+      }
+      if (this.puzzles[index - 1] === ''){
+        this.$set(this.puzzles, index, '');
+        this.$set(this.puzzles, index - 1, temp);
+      }
+      if (this.puzzles[index + 1] === ''){
+        this.$set(this.puzzles, index, '');
+        this.$set(this.puzzles, index + 1, temp);
+      }
+
+
+      if(this.isPassed) {
+        alert("Yeah! Finished!!!")
+      }
+    }
+  },
+
+  computed: {
+    isPassed() {
+      if (this.puzzles[15] === '' && this.puzzles.every((e, i) => e === i + 1)){
+        return true;
+      }
+      return false;
     }
   },
 
   created() {
     this.initGame()
-  }
+  },
+
 })
