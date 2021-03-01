@@ -95,3 +95,14 @@ watch
 
 
 
+#### 平行组件通信
+
+中央事件总线 bus公交车事件
+需要用this.$bus.$emit()触发，this.$bus.$on()接收
+
+
+
+#### 跨层级的组件通信
+
+**provide** 和 **inject** 但是在开发中不建议使用，可以用于设计组件化
+provide 用于提供数据，inject 用于接收数据

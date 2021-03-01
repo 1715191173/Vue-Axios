@@ -1,14 +1,23 @@
 <template>
+  <Life></Life>
+  <MHeader></MHeader>
   <img alt="Vue logo" src="./assets/logo.png">
   <Menus :menus="menusList" sayWhat="父组件通信给子组件" @delete="deleteOne"></Menus>
 </template>
 
 <script>
+
+
+
 import Menus from "@/components/Menus";
+import MHeader from "@/components/MHeader";
+import Life from "@/components/Life";
 export default {
   name: 'App',
   components: {
     Menus,
+    MHeader,
+    Life,
   },
   data() {
     return {

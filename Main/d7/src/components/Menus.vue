@@ -23,10 +23,10 @@ export default {
   props: ['menus', 'sayWhat'],
   methods: {
     deleteItem(i) {
-      this.$emit('delete', i)
+      this.$emit('deleteOne', i)
     },
     add() {
-      console.log(this.$bus);
+      this.$bus.$emit('addCart')
     }
   }
 }
